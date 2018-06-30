@@ -20,6 +20,12 @@ services:
       - "9200:9200"
       - "9300:9300"
     restart: on-failure
+    # healthcheck:
+    #   test: ["CMD", "curl",  "--silent", "-f", "localhost:9200/_cluster/health || exit 1"]
+    #   interval: 30s
+    #   timeout: 30s
+    #   retries: 3
+    #   start_period: 40s
     networks:
       - es
 
@@ -27,8 +33,9 @@ services:
     image: docker.elastic.co/kibana/kibana-oss:6.2.4
     ports:
       - "5601:5601" 
-    depends_on:
-      - ${ELASTIC_HOST}
+    # depends_on:
+    #   elasticsearch:
+    #     condition: service_healthy
     environment:
       SERVER_NAME: ${KIBANA_HOST}
       ELASTICSEARCH_URL: ${ELASTIC_FULL_URL}
@@ -36,24 +43,27 @@ services:
     networks:
       - es
 
-  go-elastic-twitterbeat:
-    build:
-      context: ./twitterbeat/
-      dockerfile: Dockerfile_twitterbeat
-    depends_on:
-      - ${KIBANA_HOST}
-    env_file:
-      - ./.env
-    restart: on-failure
-    networks:
-      - es
+  # go-elastic-twitterbeat:
+  #   build:
+  #     context: ./twitterbeat/
+  #     dockerfile: Dockerfile_twitterbeat
+  #   # depends_on:
+  #   #   elasticsearch:
+  #   #     condition: service_healthy
+  #   volumes:
+  #     - ./twitterbeat/twitterbeat.yml:/var/twitterbeat/config/twitterbeat.yml
+  #   env_file:
+  #     - ./.env
+  #   restart: on-failure
+  #   networks:
+  #     - es
 
 # Persisting volumes
 volumes:
   nginx-volume:
   elasticsearch-volume:
   kibana-volume:
-  go-elastic-twitterbeat-volume:
+  # go-elastic-twitterbeat-volume:
 
 networks:
   es:
