@@ -1,0 +1,3 @@
+FROM buehler/go-elastic-twitterbeat:latest
+COPY twitterbeat.yml /var/twitterbeat/config/twitterbeat.yml
+USER root

@@ -1,0 +1,59 @@
+version: "2"
+
+services:
+
+  nginx:
+    build:
+      context: ./nginx/
+      dockerfile: Dockerfile_nginx
+    ports:
+      - "9000:9000"
+    restart: on-failure
+
+  elasticsearch:
+    build:
+      context: ./elasticsearch/
+      dockerfile: Dockerfile
+    environment:
+      SERVER_NAME: ${ELASTIC_HOST}
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    restart: on-failure
+    networks:
+      - es
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana-oss:6.2.4
+    ports:
+      - "5601:5601" 
+    depends_on:
+      - ${ELASTIC_HOST}
+    environment:
+      SERVER_NAME: ${KIBANA_HOST}
+      ELASTICSEARCH_URL: ${ELASTIC_FULL_URL}
+    restart: on-failure
+    networks:
+      - es
+
+  go-elastic-twitterbeat:
+    build:
+      context: ./twitterbeat/
+      dockerfile: Dockerfile_twitterbeat
+    depends_on:
+      - ${KIBANA_HOST}
+    env_file:
+      - ./.env
+    restart: on-failure
+    networks:
+      - es
+
+# Persisting volumes
+volumes:
+  nginx-volume:
+  elasticsearch-volume:
+  kibana-volume:
+  go-elastic-twitterbeat-volume:
+
+networks:
+  es:
