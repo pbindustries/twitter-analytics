@@ -22,9 +22,8 @@ services:
       dockerfile: Dockerfile
     environment:
       SERVER_NAME: ${ELASTIC_HOST}
-    ports:
-      - "9200:9200"
-      - "9300:9300"
+    volumes:
+      - ./docker_elasticsearch/data/:/var/data/elasticsearch/
     restart: on-failure
     # healthcheck:
     #   test: ["CMD", "curl",  "--silent", "-f", "localhost:9200/_cluster/health || exit 1"]
@@ -36,9 +35,7 @@ services:
       - es
 
   kibana:
-    image: docker.elastic.co/kibana/kibana-oss:6.2.4
-    ports:
-      - "5601:5601" 
+    image: docker.elastic.co/kibana/kibana-oss:6.2.4 
     # depends_on:
     #   elasticsearch:
     #     condition: service_healthy
@@ -60,8 +57,6 @@ services:
     environment:
       SERVER_NAME: ${LOGSTASH_HOST}
       ELASTICSEARCH_URL: ${ELASTIC_FULL_URL}
-    ports:
-      - "5000:5000"
     depends_on:
       - ${ELASTIC_HOST}
     networks:
