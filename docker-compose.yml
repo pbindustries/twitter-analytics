@@ -53,8 +53,9 @@ services:
 
   logstash:
     image: docker.elastic.co/logstash/logstash-oss:6.2.4
+    env_file:
+      - ./.env
     volumes:
-      # - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
       - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
     environment:
       SERVER_NAME: ${LOGSTASH_HOST}
