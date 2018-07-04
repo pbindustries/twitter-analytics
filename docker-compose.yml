@@ -5,10 +5,16 @@ services:
   nginx:
     build:
       context: ./nginx/
-      dockerfile: Dockerfile_nginx
+      dockerfile: Dockerfile
     ports:
-      - "9000:9000"
+      - "5602:443"
+      - "5603:444"
+      - "5604:445"
+    env_file:
+      - ./.env
     restart: on-failure
+    networks:
+      - es
 
   elasticsearch:
     build:
@@ -36,6 +42,8 @@ services:
     # depends_on:
     #   elasticsearch:
     #     condition: service_healthy
+    depends_on:
+      - ${ELASTIC_HOST}
     environment:
       SERVER_NAME: ${KIBANA_HOST}
       ELASTICSEARCH_URL: ${ELASTIC_FULL_URL}
@@ -43,27 +51,27 @@ services:
     networks:
       - es
 
-  # go-elastic-twitterbeat:
-  #   build:
-  #     context: ./twitterbeat/
-  #     dockerfile: Dockerfile_twitterbeat
-  #   # depends_on:
-  #   #   elasticsearch:
-  #   #     condition: service_healthy
-  #   volumes:
-  #     - ./twitterbeat/twitterbeat.yml:/var/twitterbeat/config/twitterbeat.yml
-  #   env_file:
-  #     - ./.env
-  #   restart: on-failure
-  #   networks:
-  #     - es
+  logstash:
+    image: docker.elastic.co/logstash/logstash-oss:6.2.4
+    volumes:
+      # - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+    environment:
+      SERVER_NAME: ${LOGSTASH_HOST}
+      ELASTICSEARCH_URL: ${ELASTIC_FULL_URL}
+    ports:
+      - "5000:5000"
+    depends_on:
+      - ${ELASTIC_HOST}
+    networks:
+      - es
 
 # Persisting volumes
 volumes:
-  nginx-volume:
-  elasticsearch-volume:
-  kibana-volume:
-  # go-elastic-twitterbeat-volume:
+  nginx:
+  elasticsearch:
+  kibana:
+  logstash:
 
 networks:
   es:

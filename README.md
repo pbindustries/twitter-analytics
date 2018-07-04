@@ -2,8 +2,6 @@
 
 Dockerized Elasticsearch project project that uses twitterbeat to retrieve and index tweets from a listed twitter handles. 
 
-## Getting Started
-
 Email me if you have any questions: pbindustriesapps@gmail.com
 
 ### Prerequisites
