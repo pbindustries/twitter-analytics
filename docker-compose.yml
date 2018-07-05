@@ -9,10 +9,12 @@ services:
     ports:
       - "5602:443"
       - "5603:444"
-      - "5604:445"
+      # - "5604:445"
     env_file:
       - ./.env
     restart: on-failure
+    depends_on:
+      - ${KIBANA_HOST}
     networks:
       - es
 
@@ -50,13 +52,13 @@ services:
 
   logstash:
     image: docker.elastic.co/logstash/logstash-oss:6.2.4
+    # build:
+    #   context: ./logstash/
+    #   dockerfile: Dockerfile
     env_file:
       - ./.env
     volumes:
-      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
-    environment:
-      SERVER_NAME: ${LOGSTASH_HOST}
-      ELASTICSEARCH_URL: ${ELASTIC_FULL_URL}
+      - ./logstash/pipeline:/usr/share/logstash/pipeline
     depends_on:
       - ${ELASTIC_HOST}
     networks:

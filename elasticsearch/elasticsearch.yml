@@ -1,4 +1,3 @@
-cluster.name: "elastic-stack-twitter-analyzer"
-node.name: twitter-node
+cluster.name: "elastic-twitter-analyzer"
 network.host: 0.0.0.0
 discovery.zen.minimum_master_nodes: 1
