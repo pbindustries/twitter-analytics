@@ -9,7 +9,7 @@ services:
     ports:
       - "5602:443"
       - "5603:444"
-      # - "5604:445"
+      - "5604:445"
     env_file:
       - ./.env
     restart: on-failure
@@ -25,7 +25,7 @@ services:
     environment:
       SERVER_NAME: ${ELASTIC_HOST}
     volumes:
-      - ./docker_elasticsearch/data/:/var/data/elasticsearch/
+      - ./elasticsearch/data/:/var/data/elasticsearch/
     restart: on-failure
     # healthcheck:
     #   test: ["CMD", "curl",  "--silent", "-f", "localhost:9200/_cluster/health || exit 1"]
@@ -52,15 +52,15 @@ services:
 
   logstash:
     image: docker.elastic.co/logstash/logstash-oss:6.2.4
-    # build:
-    #   context: ./logstash/
-    #   dockerfile: Dockerfile
     env_file:
       - ./.env
     volumes:
       - ./logstash/pipeline:/usr/share/logstash/pipeline
     depends_on:
       - ${ELASTIC_HOST}
+    environment:
+      SERVER_NAME: ${LOGSTASH_HOST}
+    restart: on-failure
     networks:
       - es
 
