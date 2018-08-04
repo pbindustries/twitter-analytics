@@ -1,11 +1,11 @@
 import {async, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HeroService} from '../../heroes/shared/hero.service';
+import {TweeterService} from '../../tweeters/shared/tweeter.service';
 import {SearchBarComponent} from './search-bar.component';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {TranslateModule} from '@ngx-translate/core';
 import {APP_CONFIG, AppConfig} from '../../config/app.config';
 import {AppRoutingModule} from '../../app-routing.module';
-import {HeroTopComponent} from '../../heroes/hero-top/hero-top.component';
+import {TweeterTopComponent} from '../../tweeters/tweeter-top/tweeter-top.component';
 import {APP_BASE_HREF} from '@angular/common';
 import {TestsModule} from '../../shared/modules/tests.module';
 import {Error404Component} from '../error404/error-404.component';
@@ -13,7 +13,7 @@ import {Error404Component} from '../error404/error-404.component';
 describe('SearchBarComponent', () => {
   let fixture;
   let component;
-  let heroService;
+  let tweeterService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -24,13 +24,13 @@ describe('SearchBarComponent', () => {
       ],
       declarations: [
         SearchBarComponent,
-        HeroTopComponent,
+        TweeterTopComponent,
         Error404Component
       ],
       providers: [
         {provide: APP_CONFIG, useValue: AppConfig},
         {provide: APP_BASE_HREF, useValue: '/'},
-        HeroService
+        TweeterService
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
@@ -38,38 +38,38 @@ describe('SearchBarComponent', () => {
     fixture = TestBed.createComponent(SearchBarComponent);
     fixture.detectChanges();
     component = fixture.debugElement.componentInstance;
-    heroService = TestBed.get(HeroService);
+    tweeterService = TestBed.get(TweeterService);
   }));
 
-  it('should create hero search component', (() => {
+  it('should create tweeter search component', (() => {
     expect(component).toBeTruthy();
   }));
 
-  it('should get all heroes', fakeAsync(() => {
-    spyOn(heroService, 'getHeroes').and.returnValue(Promise.resolve(true));
+  it('should get all tweeters', fakeAsync(() => {
+    spyOn(tweeterService, 'getTweeters').and.returnValue(Promise.resolve(true));
     tick();
     fixture.detectChanges();
-    expect(component.defaultHeroes.length).toBeGreaterThan(0);
-    for (const hero of component.defaultHeroes) {
-      expect(hero.default).toBe(true);
+    expect(component.defaultTweeters.length).toBeGreaterThan(0);
+    for (const tweeter of component.defaultTweeters) {
+      expect(tweeter.default).toBe(true);
     }
   }));
 
-  it('should filter heroes array', (() => {
-    component.defaultHeroes = [
+  it('should filter tweeters array', (() => {
+    component.defaultTweeters = [
       {
         'id': 1,
-        'name': 'batman',
+        'name': 'Donald Trump',
         'default': true
       },
       {
         'id': 2,
-        'name': 'spiderman',
+        'name': 'Kanye West',
         'default': false
       }
     ];
-    expect(component.filterHeroes('batman').length).toBe(1);
-    expect(component.filterHeroes('spiderman').length).toBe(0);
-    expect(component.filterHeroes().length).toBe(2);
+    expect(component.filtertweeters('Donald Trump').length).toBe(1);
+    expect(component.filtertweeters('Kanye West').length).toBe(0);
+    expect(component.filtertweeters().length).toBe(2);
   }));
 });

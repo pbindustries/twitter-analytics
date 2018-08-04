@@ -1,7 +1,7 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {MaterialModule} from './material.module';
 import {TranslateModule} from '@ngx-translate/core';
-import {HeroService} from '../../heroes/shared/hero.service';
+import {TweeterService} from '../../tweeters/shared/tweeter.service';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {NgxExampleLibraryModule} from '@ismaestro/ngx-example-library';
 
@@ -25,7 +25,7 @@ export class SharedModule {
     return {
       ngModule: SharedModule,
       providers: [
-        HeroService
+        TweeterService
       ]
     };
   }

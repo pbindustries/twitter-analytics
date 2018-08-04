@@ -1,24 +1,24 @@
 import {async, TestBed} from '@angular/core/testing';
 import {APP_BASE_HREF} from '@angular/common';
-import {HeroDetailComponent} from './hero-detail.component';
-import {HeroesModule} from '../heroes.module';
+import {TweeterDetailComponent} from './tweeter-detail.component';
+import {TweetersModule} from '../tweeters.module';
 import {TestsModule} from '../../shared/modules/tests.module';
 import {APP_CONFIG, AppConfig} from '../../config/app.config';
 import {TranslateModule} from '@ngx-translate/core';
-import {HeroService} from '../shared/hero.service';
+import {TweeterService} from '../shared/tweeter.service';
 import {ActivatedRoute, convertToParamMap} from '@angular/router';
 
-describe('HeroDetailComponent', () => {
+describe('TweeterDetailComponent', () => {
   let fixture;
   let component;
-  let heroService;
+  let tweeterService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         TestsModule,
         TranslateModule.forRoot(),
-        HeroesModule
+        TweetersModule
       ],
       providers: [
         {provide: APP_CONFIG, useValue: AppConfig},
@@ -33,21 +33,21 @@ describe('HeroDetailComponent', () => {
             }
           }
         },
-        HeroService
+        TweeterService
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(HeroDetailComponent);
+    fixture = TestBed.createComponent(TweeterDetailComponent);
     fixture.detectChanges();
     component = fixture.debugElement.componentInstance;
-    heroService = TestBed.get(HeroService);
+    tweeterService = TestBed.get(TweeterService);
   }));
 
-  it('should create hero detail component', (() => {
+  it('should create tweeter detail component', (() => {
     expect(component).toBeTruthy();
   }));
 
-  it('should like a hero', async(() => {
+  it('should like a tweeter', async(() => {
     localStorage.setItem('votes', String(AppConfig.votesLimit - 1));
     component.like({id: 1}).then((result) => {
       expect(result).toBe(true);

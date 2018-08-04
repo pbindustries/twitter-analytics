@@ -1,9 +1,9 @@
 import {map, startWith} from 'rxjs/operators';
 import {Component, OnInit} from '@angular/core';
 import {LoggerService} from '../shared/logger.service';
-import {Hero} from '../../heroes/shared/hero.model';
+import {Tweeter} from '../../tweeters/shared/tweeter.model';
 import {FormControl} from '@angular/forms';
-import {HeroService} from '../../heroes/shared/hero.service';
+import {TweeterService} from '../../tweeters/shared/tweeter.service';
 import {Router} from '@angular/router';
 import {AppConfig} from '../../config/app.config';
 
@@ -18,36 +18,36 @@ import {AppConfig} from '../../config/app.config';
 
 export class SearchBarComponent implements OnInit {
 
-  defaultHeroes: Array<Hero>;
-  heroFormControl: FormControl;
-  filteredHeroes: any;
+  defaultTweeters: Array<Tweeter>;
+  tweeterFormControl: FormControl;
+  filteredTweeters: any;
 
-  constructor(private heroService: HeroService,
+  constructor(private tweeterService: TweeterService,
               private router: Router) {
-    this.defaultHeroes = [];
-    this.heroFormControl = new FormControl();
+    this.defaultTweeters = [];
+    this.tweeterFormControl = new FormControl();
   }
 
   ngOnInit() {
-    this.heroService.getHeroes().subscribe((heroes: Array<Hero>) => {
-      this.defaultHeroes = heroes.filter(hero => hero['default']);
+    this.tweeterService.getTweeters().subscribe((tweeters: Array<Tweeter>) => {
+      this.defaultTweeters = tweeters.filter(tweeter => tweeters['default']);
 
-      this.heroFormControl.valueChanges.pipe(
+      this.tweeterFormControl.valueChanges.pipe(
         startWith(null),
-        map(value => this.filterHeroes(value)))
-        .subscribe(heroesFiltered => {
-          this.filteredHeroes = heroesFiltered;
+        map(value => this.filterTweeters(value)))
+        .subscribe(tweetersFiltered => {
+          this.filteredTweeters = tweetersFiltered;
         });
     });
   }
 
-  filterHeroes(val: string): Hero[] {
-    return val ? this.defaultHeroes.filter(hero => hero.name.toLowerCase().indexOf(val.toLowerCase()) === 0 && hero['default'])
-      : this.defaultHeroes;
+  filterTweeters(val: string): Tweeter[] {
+    return val ? this.defaultTweeters.filter(tweeter => tweeter.name.toLowerCase().indexOf(val.toLowerCase()) === 0 && tweeter['default'])
+      : this.defaultTweeters;
   }
 
-  searchHero(hero: Hero): Promise<boolean> {
-    LoggerService.log('Moved to hero with id: ' + hero.id);
-    return this.router.navigate([AppConfig.routes.heroes + '/' + hero.id]);
+  searchTweeter(tweeter: Tweeter): Promise<boolean> {
+    LoggerService.log('Moved to tweeter with id: ' + tweeter.id);
+    return this.router.navigate([AppConfig.routes.tweeters + '/' + tweeter.id]);
   }
 }

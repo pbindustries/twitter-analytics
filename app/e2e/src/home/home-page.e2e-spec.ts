@@ -1,4 +1,4 @@
-import {AppConfig} from '../../../src/app/config/app.config';
+import {AppConfig} from 'src/app/config/app.config';
 import {HomePage} from './home-page';
 
 describe('Home page', function () {
@@ -8,8 +8,8 @@ describe('Home page', function () {
     page = new HomePage();
   });
 
-  it('should contains heroes limit', () => {
+  it('should contains tweeters limit', () => {
     HomePage.navigateTo();
-    expect<any>(HomePage.getNumberHeroes()).toBe(AppConfig.topHeroesLimit);
+    expect<any>(HomePage.getNumberTweeters()).toBe(AppConfig.topTweetersLimit);
   });
 });

@@ -2,7 +2,7 @@ import {Observable, of, throwError as observableThrowError} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AppConfig} from '../../config/app.config';
-import {Hero} from './hero.model';
+import {Tweeter} from './tweeter.model';
 import {catchError, tap} from 'rxjs/operators';
 import {MatSnackBar, MatSnackBarConfig} from '@angular/material';
 import {TranslateService} from '@ngx-translate/core';
@@ -13,8 +13,8 @@ const httpOptions = {
 };
 
 @Injectable()
-export class HeroService {
-  private heroesUrl: string;
+export class TweeterService {
+  private tweetersUrl: string;
   private translations: any;
 
   static checkIfUserCanVote(): boolean {
@@ -24,9 +24,8 @@ export class HeroService {
   constructor(private http: HttpClient,
               private translateService: TranslateService,
               private snackBar: MatSnackBar) {
-    this.heroesUrl = AppConfig.endpoints.heroes;
 
-    this.translateService.get(['heroCreated', 'saved', 'heroLikeMaximum', 'heroRemoved'], {
+    this.translateService.get(['tweeterCreated', 'saved', 'tweeterFollowerMaximum', 'tweeterRemoved'], {
       'value': AppConfig.votesLimit
     }).subscribe((texts) => {
       this.translations = texts;
@@ -47,60 +46,60 @@ export class HeroService {
     };
   }
 
-  getHeroes(): Observable<Hero[]> {
-    return this.http.get<Hero[]>(this.heroesUrl)
+  getTweeters(): Observable<Tweeter[]> {
+    return this.http.get<Tweeter[]>(this.tweetersUrl)
       .pipe(
-        tap(heroes => LoggerService.log(`fetched heroes`)),
-        catchError(this.handleError('getHeroes', []))
+        tap(tweeters => LoggerService.log(`fetched tweeters`)),
+        catchError(this.handleError('getTweeters', []))
       );
   }
 
-  getHeroById(id: string): Observable<Hero> {
-    const url = `${this.heroesUrl}/${id}`;
-    return this.http.get<Hero>(url).pipe(
-      tap(() => LoggerService.log(`fetched hero id=${id}`)),
-      catchError(this.handleError<Hero>(`getHero id=${id}`))
+  getTweeterById(id: string): Observable<Tweeter> {
+    const url = `${this.tweetersUrl}/${id}`;
+    return this.http.get<Tweeter>(url).pipe(
+      tap(() => LoggerService.log(`fetched tweeter id=${id}`)),
+      catchError(this.handleError<Tweeter>(`getTweeter id=${id}`))
     );
   }
 
-  createHero(hero: Hero): Observable<Hero> {
-    return this.http.post<Hero>(this.heroesUrl, JSON.stringify({
-      name: hero.name,
-      alterEgo: hero.alterEgo
+  createTweeter(tweeter: Tweeter): Observable<Tweeter> {
+    return this.http.post<Tweeter>(this.tweetersUrl, JSON.stringify({
+      name: tweeter.name,
+      handle: tweeter.handle
     }), httpOptions).pipe(
-      tap((heroSaved: Hero) => {
-        LoggerService.log(`added hero w/ id=${heroSaved.id}`);
-        this.showSnackBar('heroCreated');
+      tap((tweeterSaved: Tweeter) => {
+        LoggerService.log(`added tweeter w/ id=${tweeterSaved.id}`);
+        this.showSnackBar('tweeterCreated');
       }),
-      catchError(this.handleError<Hero>('addHero'))
+      catchError(this.handleError<Tweeter>('addTweeter'))
     );
   }
 
-  deleteHeroById(id: any): Observable<Array<Hero>> {
-    const url = `${this.heroesUrl}/${id}`;
+  deleteTweeterById(id: any): Observable<Array<Tweeter>> {
+    const url = `${this.tweetersUrl}/${id}`;
 
-    return this.http.delete<Array<Hero>>(url, httpOptions).pipe(
-      tap(() => LoggerService.log(`deleted hero id=${id}`)),
-      catchError(this.handleError<Array<Hero>>('deleteHero'))
+    return this.http.delete<Array<Tweeter>>(url, httpOptions).pipe(
+      tap(() => LoggerService.log(`deleted tweeter id=${id}`)),
+      catchError(this.handleError<Array<Tweeter>>('deleteTweeter'))
     );
   }
 
-  like(hero: Hero) {
-    if (HeroService.checkIfUserCanVote()) {
-      const url = `${this.heroesUrl}/${hero.id}/like`;
+  follow(tweeter: Tweeter) {
+    if (TweeterService.checkIfUserCanVote()) {
+      const url = `${this.tweetersUrl}/${tweeter.id}/like`;
       return this.http
         .post(url, {}, httpOptions)
         .pipe(
           tap(() => {
-            LoggerService.log(`updated hero id=${hero.id}`);
+            LoggerService.log(`updated tweeter id=${tweeter.id}`);
             localStorage.setItem('votes', '' + (Number(localStorage.getItem('votes')) + 1));
-            hero.likes += 1;
+            tweeter.followers += 1;
             this.showSnackBar('saved');
           }),
-          catchError(this.handleError<any>('updateHero'))
+          catchError(this.handleError<any>('updateTweeter'))
         );
     } else {
-      this.showSnackBar('heroLikeMaximum');
+      this.showSnackBar('tweeterFollowerMaximum');
       return observableThrowError('maximum votes');
     }
   }

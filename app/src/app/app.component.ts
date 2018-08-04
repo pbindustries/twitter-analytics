@@ -28,21 +28,21 @@ export class AppComponent implements OnInit {
     this.translateService.setDefaultLang('en');
     this.translateService.use('en');
 
-    this.title.setTitle('Angular Example App');
+    this.title.setTitle('Twitter Visualizations');
     this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
         switch (event.urlAfterRedirects) {
           case '/':
             this.meta.updateTag({
               name: 'description',
-              content: 'Angular Example app with Angular CLI, Angular Material and more'
+              content: 'Add to this'
             });
             break;
-          case '/' + AppConfig.routes.heroes:
-            this.title.setTitle('Heroes list');
+          case '/' + AppConfig.routes.tweeters:
+            this.title.setTitle('Tweeters list');
             this.meta.updateTag({
               name: 'description',
-              content: 'List of super-heroes'
+              content: 'List of available tweeters'
             });
             break;
         }

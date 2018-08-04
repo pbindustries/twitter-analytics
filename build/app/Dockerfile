@@ -13,3 +13,5 @@ COPY . .
 
 ## Build the angular app in production mode and store the artifacts in dist folder
 RUN $(npm bin)/ng build --prod
+
+RUN docker build -t angularexampleapp . && docker run -d -p 4200:80 angularexampleapp

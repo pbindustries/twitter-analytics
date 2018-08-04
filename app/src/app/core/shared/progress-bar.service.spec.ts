@@ -1,13 +1,13 @@
 import {TestBed} from '@angular/core/testing';
 import {ProgressBarService} from './progress-bar.service';
-import {HeroService} from '../../heroes/shared/hero.service';
+import {TweeterService} from '../../tweeters/shared/tweeter.service';
 import {TestsModule} from '../../shared/modules/tests.module';
 import {TranslateModule} from '@ngx-translate/core';
 import {APP_CONFIG, AppConfig} from '../../config/app.config';
 
 describe('ProgressBarService', () => {
   let progressBarService;
-  let heroService;
+  let tweeterService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -18,12 +18,12 @@ describe('ProgressBarService', () => {
       providers: [
         {provide: APP_CONFIG, useValue: AppConfig},
         ProgressBarService,
-        HeroService
+        TweeterService
       ]
     });
 
     progressBarService = TestBed.get(ProgressBarService);
-    heroService = TestBed.get(HeroService);
+    tweeterService = TestBed.get(TweeterService);
   });
 
   it('should not be requestsRunning', (() => {

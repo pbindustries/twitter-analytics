@@ -23,3 +23,8 @@ vim .env
 docker-compose build
 docker-compose up
 ```
+- Open a new terminal in the project/app folder and run the following:
+```
+npm install
+npm run start
+```

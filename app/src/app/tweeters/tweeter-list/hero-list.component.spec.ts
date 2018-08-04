@@ -1,12 +1,12 @@
 import {async, TestBed} from '@angular/core/testing';
 import {APP_BASE_HREF} from '@angular/common';
-import {HeroListComponent} from './hero-list.component';
-import {HeroesModule} from '../heroes.module';
+import {TweeterListComponent} from './tweeter-list.component';
+import {TweetersModule} from '../tweeters.module';
 import {TestsModule} from '../../shared/modules/tests.module';
 import {TranslateModule} from '@ngx-translate/core';
 import {APP_CONFIG, AppConfig} from '../../config/app.config';
 
-describe('HeroListComponent', () => {
+describe('TweeterListComponent', () => {
   let fixture;
   let component;
 
@@ -15,7 +15,7 @@ describe('HeroListComponent', () => {
       imports: [
         TestsModule,
         TranslateModule.forRoot(),
-        HeroesModule
+        TweetersModule
       ],
       providers: [
         {provide: APP_CONFIG, useValue: AppConfig},
@@ -23,12 +23,12 @@ describe('HeroListComponent', () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(HeroListComponent);
+    fixture = TestBed.createComponent(TweeterListComponent);
     fixture.detectChanges();
     component = fixture.debugElement.componentInstance;
   }));
 
-  it('should create hero list component', (() => {
+  it('should create tweeter list component', (() => {
     expect(component).toBeTruthy();
   }));
 });

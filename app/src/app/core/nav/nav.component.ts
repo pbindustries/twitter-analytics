@@ -39,10 +39,10 @@ export class NavComponent implements OnInit {
   }
 
   private loadMenus(): void {
-    this.translateService.get(['home', 'heroesList'], {}).subscribe((texts: any) => {
+    this.translateService.get(['home', 'tweetersList'], {}).subscribe((texts: any) => {
       this.menuItems = [
         {link: '/', name: texts['home']},
-        {link: '/' + AppConfig.routes.heroes, name: texts['heroesList']}
+        {link: '/' + AppConfig.routes.tweeters, name: texts['tweetersList']}
       ];
     });
   }

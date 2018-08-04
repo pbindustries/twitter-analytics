@@ -1,5 +1,5 @@
 {
-  "name": "angular-example-app",
+  "name": "elastic-stack-twitter-analyzer",
   "version": "6.0.0",
   "license": "MIT",
   "scripts": {
@@ -14,10 +14,7 @@
     "lint": "ng lint",
     "lint:library": "ng lint ngx-example-library",
     "ci": "npm run lint && npm run lint:library && npm run test && npm run test:library && npm run e2e",
-    "sme": "ng build && source-map-explorer dist/main.bundle.js",
-    "release:minor": "standard-version --release-as minor && git push --follow-tags origin master",
-    "release:major": "standard-version --release-as major && git push --follow-tags origin master",
-    "docker": "docker build -t angularexampleapp . && docker run -d -p 4200:80 angularexampleapp"
+    "sme": "ng build && source-map-explorer dist/main.bundle.js"
   },
   "private": true,
   "engines": {
@@ -66,7 +63,7 @@
     "http-server": "0.11.1",
     "jasmine-core": "3.1.0",
     "jasmine-spec-reporter": "4.2.1",
-    "karma": "2.0.2",
+    "karma": "^2.0.5",
     "karma-chrome-launcher": "2.2.0",
     "karma-cli": "1.0.1",
     "karma-coverage-istanbul-reporter": "1.4.2",
@@ -76,8 +73,8 @@
     "karma-scss-preprocessor": "3.0.0",
     "moment": "2.22.1",
     "ng-packagr": "^3.0.0-rc.2",
-    "node-sass": "4.9.0",
-    "protractor": "5.3.1",
+    "node-sass": "^4.9.2",
+    "protractor": "^5.4.0",
     "source-map-explorer": "1.5.0",
     "standard-version": "4.3.0",
     "ts-helpers": "1.1.2",
