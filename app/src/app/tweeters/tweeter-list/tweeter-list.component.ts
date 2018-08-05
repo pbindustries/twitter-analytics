@@ -39,7 +39,7 @@ export class TweeterListComponent implements OnInit {
 
     this.newTweeterForm = this.formBuilder.group({
       'name': new FormControl('', [Validators.required]),
-      'alterEgo': new FormControl('', [Validators.required])
+      'handle': new FormControl('', [Validators.required])
     });
   }
 
@@ -51,7 +51,7 @@ export class TweeterListComponent implements OnInit {
     });
   }
 
-  like(tweeter: Tweeter) {
+  follow(tweeter: Tweeter) {
     this.tweeterService.follow(tweeter).subscribe(() => {
       this.canVote = TweeterService.checkIfUserCanVote();
     }, (error: Response) => {

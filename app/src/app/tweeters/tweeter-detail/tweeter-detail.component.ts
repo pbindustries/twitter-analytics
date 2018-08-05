@@ -27,7 +27,7 @@ export class TweeterDetailComponent implements OnInit {
     });
   }
 
-  like(tweeter: Tweeter) {
+  follow(tweeter: Tweeter) {
     return new Promise((resolve, reject) => {
       this.tweeterService.follow(tweeter).subscribe(() => {
         this.canVote = TweeterService.checkIfUserCanVote();

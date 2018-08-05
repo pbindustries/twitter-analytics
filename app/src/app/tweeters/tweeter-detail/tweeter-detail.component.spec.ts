@@ -47,9 +47,9 @@ describe('TweeterDetailComponent', () => {
     expect(component).toBeTruthy();
   }));
 
-  it('should like a tweeter', async(() => {
+  it('should follow a tweeter', async(() => {
     localStorage.setItem('votes', String(AppConfig.votesLimit - 1));
-    component.like({id: 1}).then((result) => {
+    component.follow({id: 1}).then((result) => {
       expect(result).toBe(true);
     });
   }));

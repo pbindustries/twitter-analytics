@@ -10,18 +10,18 @@
       <mat-list-item *ngFor="let tweeter of tweeters">
         <img *ngIf="tweeter.default" class="cp"
              (click)="seeTweeterDetails(tweeter);" mat-list-avatar
-             src="assets/images/heroes/{{hero.id}}-thumbnail.jpg">
+             src="assets/images/heroes/{{tweeter.id}}-thumbnail.jpg">
         <img *ngIf="!tweeter.default"
              (click)="seeTweeterDetails(tweeter);" mat-list-avatar src="assets/images/heroes/default.png">
         <h3 mat-line [class.cp]="tweeter.default" (click)="seeTweeterDetails(tweeter);"> {{tweeter.name}} </h3>
         <p mat-line [class.cp]="tweeter.default" (click)="seeTweeterDetails(tweeter);">
-          <span>{{tweeter.alterEgo}}</span>
+          <span>{{tweeter.handle}}</span>
         </p>
         <div class="tweeter-actions">
-          {{tweeter.likes | number:'.0'}}
+          {{tweeter.followers | number:'.0'}}
           <mat-icon matTooltip="{{(canVote ? 'canVote' : 'cannotVote') | translate}}"
                     [matTooltipPosition]="'above'"
-                    class="icon__like--red" (click)="follow(tweeter)">
+                    class="icon__follow--red" (click)="follow(tweeter)">
             favorite
           </mat-icon>
           <mat-icon class="icon__remove" *ngIf="!tweeter.default"
@@ -49,8 +49,8 @@
       <mat-form-field class="input-container">
         <input matInput type="text"
                placeholder="{{'realName' | translate}}"
-               formControlName="alterEgo">
-        <mat-error *ngIf="!newTweeterForm.controls.alterEgo.valid && newTweeterForm.controls.alterEgo.touched">
+               formControlName="handle">
+        <mat-error *ngIf="!newTweeterForm.controls.handle.valid && newTweeterForm.controls.handle.touched">
           {{'realNameRequired' | translate}}
         </mat-error>
       </mat-form-field>

@@ -14,17 +14,17 @@
                         <div (click)="seeTweeterDetails(tweeter)" mat-card-avatar class="tweeter-header__image"
                              [ngStyle]="{'background-image': 'url(assets/images/heroes/' + tweeter.id + '-thumbnail.jpg)'}"></div>
                         <mat-card-title (click)="seeTweeterDetails(tweeter)">{{tweeter.name}}</mat-card-title>
-                        <mat-card-subtitle (click)="seeTweeterDetails(tweeter)">{{tweeter.alterEgo}}</mat-card-subtitle>
+                        <mat-card-subtitle (click)="seeTweeterDetails(tweeter)">{{tweeter.handle}}</mat-card-subtitle>
                         <div class="flex-spacer"></div>
                         <div class="tweeter-actions">
-                            {{tweeter.likes}}
+                            {{tweeter.followers}}
                             <mat-icon matTooltip="{{(canVote ? 'canVote' : 'cannotVote') | translate}}"
                                       [matTooltipPosition]="'above'"
-                                      class="icon__like--red" (click)="follow(tweeter)">favorite
+                                      class="follow--red" (click)="follow(tweeter)">favorite
                             </mat-icon>
                         </div>
                     </mat-card-header>
-                    <img (click)="seeTweeterDetails(tweeter)" mat-card-image src="assets/images/heroes/{{tweeter.id}}.jpg">
+                    <!-- <img (click)="seeTweeterDetails(tweeter)" mat-card-image src="assets/images/heroes/{{tweeter.id}}.jpg"> -->
                 </mat-card>
             </ng-container>
         </div>

@@ -58,9 +58,9 @@ describe('TweeterService', () => {
     });
   }));
 
-  it('should fail like empty tweeter', async(() => {
+  it('should fail follow empty tweeter', async(() => {
     localStorage.setItem('votes', String(0));
-    tweeterService.like('noId').subscribe(() => {
+    tweeterService.follow('noId').subscribe(() => {
     }, (error) => {
       expect(error).toEqual(jasmine.any(HttpErrorResponse));
     });
@@ -69,7 +69,7 @@ describe('TweeterService', () => {
   it('should create tweeter', async(() => {
     tweeterService.createTweeter({
       'name': 'test',
-      'alterEgo': 'test'
+      'handle': 'test'
     }).subscribe((tweeter) => {
       expect(tweeter.id).not.toBeNull();
       tweeterService.deleteTweeterById(tweeter.id).subscribe((response) => {
@@ -78,7 +78,7 @@ describe('TweeterService', () => {
     });
   }));
 
-  it('should not like a tweeter because no votes', async(() => {
+  it('should not follow a tweeter because no votes', async(() => {
     localStorage.setItem('votes', String(AppConfig.votesLimit));
     expect(TweeterService.checkIfUserCanVote()).toBe(false);
     tweeterService.createTweeter({
@@ -95,14 +95,14 @@ describe('TweeterService', () => {
     });
   }));
 
-  it('should like a tweeter', async(() => {
+  it('should follow a tweeter', async(() => {
     localStorage.setItem('votes', String(0));
     expect(TweeterService.checkIfUserCanVote()).toBe(true);
     tweeterService.createTweeter({
       'name': 'test',
       'handle': 'test'
     }).subscribe((tweeter) => {
-      tweeterService.like(tweeter).subscribe((response) => {
+      tweeterService.follow(tweeter).subscribe((response) => {
         expect(response).toEqual({});
         tweeterService.deleteTweeterById(tweeter.id).subscribe((res) => {
           expect(res).toEqual({});

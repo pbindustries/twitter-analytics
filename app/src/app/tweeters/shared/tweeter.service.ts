@@ -86,7 +86,7 @@ export class TweeterService {
 
   follow(tweeter: Tweeter) {
     if (TweeterService.checkIfUserCanVote()) {
-      const url = `${this.tweetersUrl}/${tweeter.id}/like`;
+      const url = `${this.tweetersUrl}/${tweeter.id}/follow`;
       return this.http
         .post(url, {}, httpOptions)
         .pipe(

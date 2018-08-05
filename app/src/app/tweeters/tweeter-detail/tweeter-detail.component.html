@@ -17,11 +17,11 @@
                     {{tweeter.followers}}
                     <mat-icon matTooltip="{{(canVote ? 'canVote' : 'cannotVote') | translate}}"
                               [matTooltipPosition]="'above'"
-                              class="icon__like--red" (click)="follow(tweeter)">favorite
+                              class="icon__follow--red" (click)="follow(tweeter)">favorite
                     </mat-icon>
                 </div>
             </mat-card-header>
-            <img mat-card-image src="assets/images/heroes/{{hero.id}}.jpg">
+            <!-- <img mat-card-image src="assets/images/heroes/{{hero.id}}.jpg"> -->
         </mat-card>
 
         <div id="tweeter-json">

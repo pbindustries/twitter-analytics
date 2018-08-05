@@ -35,11 +35,6 @@
                 "glob": "googled41787c6aae2151b.html",
                 "input": "src/assets",
                 "output": "/"
-              },
-              {
-                "glob": "CNAME",
-                "input": "src/assets",
-                "output": "/"
               }
             ],
             "styles": [
@@ -137,11 +132,6 @@
               },
               {
                 "glob": "googled41787c6aae2151b.html",
-                "input": "src/assets",
-                "output": "/"
-              },
-              {
-                "glob": "CNAME",
                 "input": "src/assets",
                 "output": "/"
               }
